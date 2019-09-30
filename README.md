@@ -1,17 +1,18 @@
 # 410DSL
+This project's goal is to creat a Domain Specific Language to design Blogs/Media Timelines
 
 ## Requirements
-npm
-latest node
+- npm
+- Node version 10.15.0
 
 ### Required npm Packages
--express
--ejs
--esm
+- express
+- ejs
+- esm
 
 ## How to Import/Export
-since node doesn't support the es6 import/export statements,
-we use esm to enable them.
+Since Node doesn't support the es6 import/export statements,
+we use the esm module to enable them.
 
 ### Exporting a class
 `export default ClassName { ... }`
@@ -19,7 +20,10 @@ we use esm to enable them.
 ### Importing a class 
 `import ClassName from "./public/subfolder/...etc/fileName.js";`
 
-### Importing/Exporting Individual Functions
+#### Instantiating a class
+`let class = new ClassName(whatever params the constructor needs)`
+
+### Importing/Exporting Individual Functions/Variables
 `export {functionName, anotherFunction, howeverManyYouWant}`
 
 `import {functionName} from "./public/etc/fileName.js"`
