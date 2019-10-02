@@ -2,12 +2,16 @@ import Tokenizer from "../libs/tokenizer";
 import AstNode from "../libs/tokenizer";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
+import { format } from "util";
 
 export default class Program {//extends AstNode {
 
     constructor() {
         //super();
-        this.statements = [];
+        this.blogItems = [];
+        this.blogType = "";
+        this.blogName = "";
+        this.fs = require('fs');
     }
 
     mockParse(val) {
@@ -19,22 +23,66 @@ export default class Program {//extends AstNode {
             s = new Post();
         }
         s.mockParse();
-        this.statements.push(s);;
-        console.log(this.statements.length);
+        this.blogItems.push(s);;
+        console.log(this.blogItems.length);
     }
 
     parse() {
-        tokenizer.getAndCheckNext("Create Blog");
-        while(!tokenizer.checkToken("Done for now")) {
-                var statement = null;
-                if (tokenizer.CheckToken("About me")) {
-                    statement = new MeBlock();
-                }
-                if (tokenizer.CheckToken("Post")) {
-                    statement = new Post();
-                }
-                statement.parse();
-                this.statements.push(statement);
+        tokenizer.getAndCheckNext("Create");
+        this.blogType = tokenizer.getNext();
+        this.blogName = tokenizer.getNext();
+
+        console.log("Blog type: " + blogType);
+        console.log("Blog name: " + blogName);
+
+        if (tokenizer.checkToken("Format")) {
+            var blogFormat = new Format();
+            blogFormat.parse();
+        } else {
+            console.log("Blog Format not found");
+            process.exit(0);
         }
+
+        if (tokenizer.CheckToken("Aboutme")) {
+            var meBlock = new MeBlock();
+            meBlock.parse();
+        } else {
+            console.log("MeBlock (About me) not found");
+            process.exit(0);
+        }
+
+        while(!tokenizer.checkToken("Donefornow")) {
+                var post = null;
+                
+                if (tokenizer.CheckToken("Post")) {
+                    post = new Post();
+                    post.parse();
+                    this.blogItems.push(post);
+                }
+        }
+    }
+
+    evaluate() {
+        var htmlBeginning = `<!DOCTYPE html>
+                            <html>
+                            <meta name="viewport" content = "width=device-width, initial-scale=1">
+                            <body>
+                            <div class="blogTitle">
+                                <h2>${this.blogName}</h2>
+                            </div>`;
+        var htmlEnding = `</body>
+                            </html>`;
+        this.fs.appendFile("output.html", htmlBeginning, function (err) {
+            if (err) throw err;
+            console.log("something fucked up in the program evaluation process");
+        });
+        var itemLength = this.blogItems.length;
+        for (var i = 0; i < itemLength; i++) {
+            blogItems[i].evaluate();
+        }
+        this.fs.appendFile("output.html", htmlEnd, function (err) {
+            if (err) throw err;
+            console.log("something fucked up in the program evaluation process");
+        });
     }
 }
