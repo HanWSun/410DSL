@@ -14,16 +14,26 @@ import AstNode from "./public/libs/astNode.js";
 console.log("hello, this will be where the 'main' function will be. Js doesn't use main but w/e");
 
 function initializeApp() {
-    var literals = ["Create Blog", "Done for now", "About me"
-                    , "Format", "Caption", "URL", "photo", "audio"
-                    , "background", "font", "font-size", "cm", "px"
-                    , "center", "left", "right", "justify", "alignment"];
+    var literals = ["Create", "Done for now", "Post", "About me"
+                    , "Format", "Caption", "URL", "photo", "audio", "video"
+                    , "blog-background", "font", "font-size", "cm", "px"
+                    , "center", "left", "right", "justify", "alignment",
+                    , ":", ";", "{", "}"];
 
     var input = "sampleInput";
-    var tokenizer = new Tokenizer(literals, input);
+    console.log("index.js, making tokenizer");
+    Tokenizer.makeTokenizer(literals, "input.txt");
+    console.log("index.js, creating program");
     var program = new Program();
+    console.log("index.js, parsing program");
     program.parse();
     program.evaluate();
 }
 
+function mock() {
+    var program = new Program();
+    program.mockParse(1);
+}
+
 initializeApp();
+//mock();
