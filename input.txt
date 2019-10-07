@@ -1,0 +1,10 @@
+Create photoblog MyPhotoBlog:
+
+Format { 
+ blog-background “red”;
+ font “Comic Sans”;
+ font-size 13 px;
+ alignment center;
+}
+
+Done for now
