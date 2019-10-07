@@ -1,6 +1,6 @@
 export default class AstNode {
     static names = [];
-    static types = {};
+    static types = {}; 
     tokenizer = Tokenizer.getTokenizer();
     fs = require('fs');
 
