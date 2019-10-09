@@ -74,18 +74,12 @@ export default class Program extends AstNode {
                             </div>`;
         var htmlEnding = `</body>
                             </html>`;
-        this.fs.appendFile("output.html", htmlBeginning, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+        this.fs.appendFileSync("output.html", htmlBeginning);
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
         }
-        this.fs.appendFile("output.html", htmlEnd, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+        this.fs.appendFileSync("output.html", htmlEnd);
     }
 }
 
