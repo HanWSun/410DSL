@@ -21,17 +21,13 @@ export default class Tokenizer {
         try {
           console.log("tokenizer.js, attempting to find input file");
           this.program = fs.readFileSync(this.filename,'utf8');
+          console.log("tokenizer.js, found input file: " + this.filename);
+
         } catch (e) {
           console.log("Didn't find file");
           process.exit(0);
         }
-        console.log("tokenizer.js, found input file: " + this.program);
         this.spaceKillingTokenize();
-    }
-
-    init() {
-
-        console.log("sample function for tokenizer");
     }
 
 
@@ -43,7 +39,9 @@ export default class Tokenizer {
         }
 
       this.tokenizedProgram = this.program;
-      this.tokenizedProgram = this.tokenizedProgram.replace(/\n/g,"");
+      this.tokenizedProgram = this.tokenizedProgram.replace(/\r\n/g,"");
+      this.tokenizedProgram = this.tokenizedProgram.replace(/ /g,"");
+
       var RW = "@@" //RESERVEDWORD
       for(var i=0;i<this.literals.length;i++){
         var token = this.literals[i]
@@ -52,7 +50,8 @@ export default class Tokenizer {
       this.tokenizedProgram = name(this.tokenizedProgram,`${RW}${RW}`,`${RW}`)
       this.tokenizedProgram = this.tokenizedProgram.split(`${RW}`)
       this.tokens = this.tokenizedProgram;
-      //console.log(this.tokenizedProgram);
+      this.tokens.shift()
+      console.log(this.tokens);
     }
 
     checkNext(){
@@ -122,4 +121,3 @@ export default class Tokenizer {
     }
 
 }
-

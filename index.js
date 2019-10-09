@@ -17,7 +17,7 @@ function initializeApp() {
     var literals = ["Create", "Done for now", "Post", "About me"
                     , "Format", "Caption", "URL", "photo", "audio", "video"
                     , "blog-background", "font", "font-size", "cm", "px"
-                    , "center", "left", "right", "justify", "alignment",
+                    , "center", "left", "right", "justify", "alignment"
                     , ":", ";", "{", "}"];
 
     var input = "sampleInput";
