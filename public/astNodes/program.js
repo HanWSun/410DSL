@@ -1,18 +1,18 @@
-import Tokenizer from "../libs/tokenizer";
-import AstNode from "../libs/tokenizer";
+
+import AstNode from "../libs/astNode.js";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
 import { format } from "util";
-
-export default class Program { // extends AstNode {
+export default class Program extends AstNode {
 
     constructor() {
-        // console.log("calling super");
-        // super();
+        console.log("calling super");
+        super();
         this.blogItems = [];
         this.blogType = "";
         this.blogName = "";
-        this.tokenizer = Tokenizer.getTokenizer();
+        this.tokenizer = AstNode.nodeTokenizer();
+        console.log(AstNode.nodeTokenizer());
     }
 
     mockParse(val) {
@@ -88,3 +88,4 @@ export default class Program { // extends AstNode {
         });
     }
 }
+
