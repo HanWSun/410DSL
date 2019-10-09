@@ -25,7 +25,7 @@ export default class AstNode {
     }
 
     static nodeTokenizer() {
-        console.log("astnode.js nodeTokenizer: " + _tokenizer);
+        //console.log("astnode.js nodeTokenizer: " + _tokenizer);
         return Tokenizer.getTokenizer();
         //return _tokenizer;
     }
