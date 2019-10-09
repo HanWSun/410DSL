@@ -12,7 +12,7 @@ export default class MeBlock {
     }
 
     evaluate() {
-        this.fs.appendFileSync("../output.html", "<div class="aboutme">\n");
+        this.fs.appendFileSync("../output.html", '<div class="aboutme">\n');
         this.fs.appendFileSync("../output.html", "<h2>About Me</h2>\n");
         this.fs.appendFileSync("../output.html", "<p>" + text + "</p>\n");
         this.fs.appendFileSync("../output.html", "</div>\n");
