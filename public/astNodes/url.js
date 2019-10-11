@@ -13,11 +13,24 @@ export default class Url extends astNode {
     parse(){
         this.tokenizer.getAndCheckNext("url");
         this.url = this.tokenizer.getNext();
-        this.typeCheck();
+    }
+
+    get url(){
+        return this.url;
+    }
+
+    set url(value){
+        // error handling and type check
+        //this.typeCheck();
+        this.url = value;
     }
 
     evaluate(){
-        var html = '<iframe width="420" height="345" src= ${this.url}> </iframe>'
+        var html = '<iframe width="420" height="345" src=' + this.url + '></iframe>';
+        this.fs.appendFile("output.html", html, function (err) {
+            if (err) throw err;
+            console.log("error");
+        });
     }
 
     typeCheck(){
