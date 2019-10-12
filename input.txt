@@ -1,8 +1,17 @@
-Create photoblog MyPhotoBlog:
+Create photoblog Sample:
 Format { 
  blog-background “red”;
  font “Comic Sans”;
  font-size 13 px;
  alignment center;
 }
+About me { 
+    “Hello, welcome to my photo blog”
+    Format { 
+        font “timesnewroman”;
+        fsize 16 px;
+        alignment center;
+    }
+}
+
 Done for now

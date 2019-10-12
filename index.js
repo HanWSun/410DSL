@@ -15,8 +15,8 @@ console.log("hello, this will be where the 'main' function will be. Js doesn't u
 
 function initializeApp() {
     var literals = ["Create", "Done for now", "Post", "About me"
-                    , "Format", "Caption", "URL", "photo", "audio", "video"
-                    , "blog-background", "font", "font-size", "cm", "px"
+                    , "Format", "Caption", "URL", "imge", "msic", "mvie"
+                    , "blog-background", "font", "fsize", "cm", "px"
                     , "center", "left", "right", "justify", "alignment"
                     , ":", ";", "{", "}"];
 
