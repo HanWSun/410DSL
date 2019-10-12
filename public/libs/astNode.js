@@ -19,9 +19,17 @@ export default class AstNode {
         return _names;
     }
 
+    static addToNames(nm) {
+        _names.push(nm);
+    }
+
     static types() {
         //console.log(_types);
         return _types;
+    }
+
+    static addToTypes(tp) {
+        _types.push(tp);
     }
 
     static nodeTokenizer() {

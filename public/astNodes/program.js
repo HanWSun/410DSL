@@ -58,13 +58,14 @@ export default class Program extends AstNode {
                 
                 if (tokenizer.CheckToken("Post")) {
                     post = new Post();
-                    post.parse();
+                    post.parse(this.blogType);
                     this.blogItems.push(post);
                 }
         }
     }
 
     evaluate() {
+        AstNode.addToNames(this.blogName);
         var htmlBeginning = `<!DOCTYPE html>
                             <html>
                             <meta name="viewport" content = "width=device-width, initial-scale=1">
