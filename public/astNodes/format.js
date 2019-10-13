@@ -1,3 +1,4 @@
+
 import Tokenizer from "./libs/tokenizer.js";
 import astNode from "./libs/astNode.js";
 
@@ -88,6 +89,3 @@ export default class Format extends astNode{
             console.log("something went wrong in adding format to css file");
         });
     }
-
-
-}
