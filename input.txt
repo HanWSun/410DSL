@@ -1,10 +1,12 @@
-Create photoblog Sample:
+Create photoblog MyBlog:
+
 Format { 
- blog-background “red”;
- font “Comic Sans”;
- font-size 13 px;
- alignment center;
+    blog-background “red”;
+    font “Comic Sans”;
+    fsize “13px”;
+    alignment center;
 }
+
 About me { 
     “Hello, welcome to my photo blog”
     Format { 
@@ -14,4 +16,11 @@ About me {
     }
 }
 
+Post { imge for MyBlog: Caption “MyPhotoTitle”; URL “www.sourceURL.com”;
+    Format { 
+        font “Comic Sans”;
+        fsize 12 px;
+        alignment left;
+    }
+}
 Done for now

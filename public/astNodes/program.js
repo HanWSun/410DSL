@@ -16,19 +16,6 @@ export default class Program extends AstNode {
         console.log(AstNode.nodeTokenizer());
     }
 
-    mockParse(val) {
-        console.log("mock parse for program");
-        var s = null;
-        if (val == 1) {
-            s = new MeBlock();
-        } else {
-            s = new Post();
-        }
-        s.mockParse();
-        this.blogItems.push(s);
-        console.log(this.blogItems.length);
-    }
-
     parse() {
         console.log("program.js, beginning parsing");
         this.tokenizer.getAndCheckNext("Create");
@@ -39,7 +26,7 @@ export default class Program extends AstNode {
         console.log("Blog name: " + this.blogName);
 
         if (this.tokenizer.checkToken("Format")) {
-            var blogFormat = new Format(Math.random().toString());
+            var blogFormat = new Format(".globalFormat");
             blogFormat.parse();
         } else {
             console.log("Blog Format not found");

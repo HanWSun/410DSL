@@ -24,6 +24,7 @@ export default class Post extends AstNode{
     // POST  ::= “Post {” MEDIA “for” TITLE “Caption” TEXT URL     #* + FORMATTING* “}”
 
     parse(){
+        console.log("post.js parsing post");
         this.tokenizer.getAndCheckNext("Post");
         this.tokenizer.getAndCheckNext("{");
         if(this.tokenizer.checkNext() === this.photo || this.tokenizer.checkNext() === this.audio || this.tokenizer.checkNext() === this.video){
