@@ -7,6 +7,11 @@ const video = "mvie";
 
 export default class Post extends AstNode{
 
+    photo = "imge";
+    audio = "msic";
+    video = "mvie";
+
+
     mockParse() {
         console.log("mock parse for post");
     }
@@ -25,7 +30,7 @@ export default class Post extends AstNode{
     parse(){
         this.tokenizer.getAndCheckNext("Post");
         this.tokenizer.getAndCheckNext("{");
-        if(this.tokenizer.getNext() === this.photo || this.tokenizer.getNext() === this.audio || this.tokenizer.getNext() === this.video){
+        if(this.tokenizer.checkNext() === this.photo || this.tokenizer.checkNext() === this.audio || this.tokenizer.checkNext() === this.video){
             this.media = this.tokenizer.getNext();
         } else {
             this.tokenizer.getAndCheckNext(this.photo);
