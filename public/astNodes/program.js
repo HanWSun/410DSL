@@ -1,17 +1,19 @@
-import Tokenizer from "../libs/tokenizer";
-import AstNode from "../libs/tokenizer";
+
+import AstNode from "../libs/astNode.js";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
+import Formatting from "./format.js";
 import { format } from "util";
-
-export default class Program {//extends AstNode {
+export default class Program extends AstNode {
 
     constructor() {
-        //super();
+        console.log("calling super");
+        super();
         this.blogItems = [];
         this.blogType = "";
         this.blogName = "";
-        this.fs = require('fs');
+        this.tokenizer = AstNode.nodeTokenizer();
+        console.log(AstNode.nodeTokenizer());
     }
 
     mockParse(val) {
@@ -23,46 +25,49 @@ export default class Program {//extends AstNode {
             s = new Post();
         }
         s.mockParse();
-        this.blogItems.push(s);;
+        this.blogItems.push(s);
         console.log(this.blogItems.length);
     }
 
     parse() {
-        tokenizer.getAndCheckNext("Create");
-        this.blogType = tokenizer.getNext();
-        this.blogName = tokenizer.getNext();
+        console.log("program.js, beginning parsing");
+        this.tokenizer.getAndCheckNext("Create");
+        this.blogType = this.tokenizer.getNext();
+        this.blogName = this.tokenizer.getNext();
 
-        console.log("Blog type: " + blogType);
-        console.log("Blog name: " + blogName);
+        console.log("Blog type: " + this.blogType);
+        console.log("Blog name: " + this.blogName);
 
-        if (tokenizer.checkToken("Format")) {
-            var blogFormat = new Format();
+        if (this.tokenizer.checkToken("Format")) {
+            var blogFormat = new Format(Math.random().toString());
             blogFormat.parse();
         } else {
             console.log("Blog Format not found");
             process.exit(0);
         }
 
-        if (tokenizer.CheckToken("Aboutme")) {
+        if (this.tokenizer.checkToken("Aboutme")) {
             var meBlock = new MeBlock();
             meBlock.parse();
+            this.blogItems.push(meBlock);
         } else {
             console.log("MeBlock (About me) not found");
             process.exit(0);
         }
 
-        while(!tokenizer.checkToken("Donefornow")) {
-                var post = null;
-                
-                if (tokenizer.CheckToken("Post")) {
-                    post = new Post();
-                    post.parse();
-                    this.blogItems.push(post);
-                }
+        while(!this.tokenizer.checkToken("Donefornow")) {
+            var post = null;
+
+            if (this.tokenizer.CheckToken("Post")) {
+                post = new Post();
+                post.parse(this.blogType);
+                this.blogItems.push(post);
+            }
         }
     }
 
     evaluate() {
+        AstNode.addToNames(this.blogName);
         var htmlBeginning = `<!DOCTYPE html>
                             <html>
                             <meta name="viewport" content = "width=device-width, initial-scale=1">
@@ -72,17 +77,17 @@ export default class Program {//extends AstNode {
                             </div>`;
         var htmlEnding = `</body>
                             </html>`;
-        this.fs.appendFile("output.html", htmlBeginning, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+
+        this.fs.appendFileSync("output.html", htmlBeginning);
+
+        //creating a css file for format if not existing already
+        this.fs.appendFileSync("output.css", "");
+
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
         }
-        this.fs.appendFile("output.html", htmlEnd, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+
+        this.fs.appendFileSync("output.html", htmlEnding);
     }
 }

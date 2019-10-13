@@ -10,7 +10,7 @@
 
 var fs = require("fs");
 
-
+let _tokenizer = null;
 export default class Tokenizer {
     //this.Tokenizer.theTokenizer;
 
@@ -19,30 +19,29 @@ export default class Tokenizer {
         this.literals = literals;
         this.filename = filename;
         try {
-        this.program = fs.readFileSync(this.filename,'utf8');
+          console.log("tokenizer.js, attempting to find input file");
+          this.program = fs.readFileSync(this.filename,'utf8');
+          console.log("tokenizer.js, found input file: " + this.filename);
 
         } catch (e) {
           console.log("Didn't find file");
           process.exit(0);
         }
-        console.log(this.program);
         this.spaceKillingTokenize();
-    }
-
-    init() {
-
-        console.log("sample function for tokenizer");
     }
 
 
     spaceKillingTokenize(){
+      console.log("beginning space killing tokenize");
       function name(str,replaceWhat,replaceTo){
         var re = new RegExp(replaceWhat, 'g');
         return str.replace(re,replaceTo);
         }
 
       this.tokenizedProgram = this.program;
-      this.tokenizedProgram = this.tokenizedProgram.replace(/\n/g,"");
+      this.tokenizedProgram = this.tokenizedProgram.replace(/\r\n/g,"");
+      this.tokenizedProgram = this.tokenizedProgram.replace(/ /g,"");
+
       var RW = "@@" //RESERVEDWORD
       for(var i=0;i<this.literals.length;i++){
         var token = this.literals[i]
@@ -51,7 +50,8 @@ export default class Tokenizer {
       this.tokenizedProgram = name(this.tokenizedProgram,`${RW}${RW}`,`${RW}`)
       this.tokenizedProgram = this.tokenizedProgram.split(`${RW}`)
       this.tokens = this.tokenizedProgram;
-      console.log(this.tokenizedProgram);
+      this.tokens.shift()
+      console.log(this.tokens);
     }
 
     checkNext(){
@@ -70,6 +70,7 @@ export default class Tokenizer {
       if (this.currentToken<this.tokens.length){
         token = this.tokens[this.currentToken];
         this.currentToken++;
+        console.log("the next token gotten is: " + token);
       }
       else{
         token="NULLTOKEN";
@@ -85,7 +86,8 @@ export default class Tokenizer {
     }
 
     getAndCheckNext(regexp){
-      s = this.getNext();
+      console.log("tokenizer.js getAndCheckNext of " + regexp);
+      var s = this.getNext();
       if (!s==regexp){
         process.exit(0);
       }
@@ -97,13 +99,25 @@ export default class Tokenizer {
         return this.currentToken<this.tokens.length;
     }
 
-    makeTokenizer(filename, literals){
-        if (this.theTokenizer==null){
-          this.theTokenizer = new Tokenizer(filename,literals);
-        }
+    // makeTokenizer(filename, literals){
+    //     if (this.theTokenizer==null){
+    //       this.theTokenizer = new Tokenizer(filename,literals);
+    //     }
+    // }
 
-    getTokenizer(){
-          return this.theTokenizer;
+    static makeTokenizer(literals, filename){
+        if (_tokenizer == null){
+          _tokenizer = new Tokenizer(literals, filename);
+          //console.log(JSON.stringify(_tokenizer));
         }
+    }
+
+    // getTokenizer(){
+    //       return this.theTokenizer;
+    //     }
+
+    static getTokenizer(){
+        return _tokenizer;
+    }
 
 }

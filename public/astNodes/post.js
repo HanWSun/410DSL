@@ -1,9 +1,16 @@
 import AstNode from "../libs/astNode";
+import { format } from "util";
+
+const photo = "imge";
+const audio = "msic";
+const video = "mvie";
 
 export default class Post extends AstNode{
+
     photo = "imge";
     audio = "msic";
     video = "mvie";
+
 
     mockParse() {
         console.log("mock parse for post");
@@ -14,9 +21,12 @@ export default class Post extends AstNode{
         this.postTitle = "";
         this.media = "";
         this.caption = "";
+        this.url = new URL();
+        this.postClass = Math.random().toString();
     }
 
     // POST  ::= “Post {” MEDIA “for” TITLE “Caption” TEXT URL     #* + FORMATTING* “}”
+
     parse(){
         this.tokenizer.getAndCheckNext("Post");
         this.tokenizer.getAndCheckNext("{");
@@ -29,12 +39,21 @@ export default class Post extends AstNode{
         this.postTitle = this.tokenizer.getNext();
         this.tokenizer.getAndCheckNext("Caption");
         this.caption = this.tokenizer.getNext();
-        var url = new URL();
-        url.parse();
+        this.url.parse();
         if(this.tokenizer.checkToken("Format")){
-            var format = new Formatting();
+            var format = new Format(this.postClass);
             format.parse();
         }
         this.tokenizer.getAndCheckNext("}");
+    }
+
+    evaluate(){
+
+        var postContent = `<div class=${this.postClass}>
+                            ${this.caption}
+                            ${this.url.evaluate()}
+                            </div>`;
+        console.log("here is the post content being added to html");
+        this.fs.appendFileSync("output.html", postContent);
     }
 }
