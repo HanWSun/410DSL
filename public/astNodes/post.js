@@ -1,4 +1,6 @@
 import AstNode from "../libs/astNode";
+import { format } from "util";
+
 
 export default class Post extends AstNode{
     photo = "imge";
@@ -15,6 +17,7 @@ export default class Post extends AstNode{
         this.media = "";
         this.caption = "";
         this.url = new URL();
+        this.postClass = Math.random().toString();
     }
 
     // POST  ::= “Post {” MEDIA “for” TITLE “Caption” TEXT URL     #* + FORMATTING* “}”
@@ -33,23 +36,19 @@ export default class Post extends AstNode{
         this.caption = this.tokenizer.getNext();
         this.url.parse();
         if(this.tokenizer.checkToken("Format")){
-            var format = new Formatting();
+            var format = new Formatting(this.postClass);
             format.parse();
         }
         this.tokenizer.getAndCheckNext("}");
     }
 
     evaluate(){
-        // create a new div element
-        var newDiv = document.createElement("div");
-        // create post
-        var newContent = document.createTextNode(this.caption);
-        // add the text node to the newly created div
-        newDiv.appendChild(newContent);
-        var urlContent = this.url.evaluate();
-        newDiv.appendChild(urlContent);
-        // add the newly created element and its content into the DOM
-        var currentDiv = document.getElementById("div1");
-        document.body.insertBefore(newDiv, currentDiv);
+
+        var postContent = `<div class=${this.postClass}>
+                            ${this.caption}
+                            ${this.url.evaluate()}
+                            </div>`;
+        console.log("here is the post content being added to html");
+        this.fs.appendFileSync("output.html", postContent);
     }
 }

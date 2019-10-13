@@ -38,7 +38,7 @@ export default class Program extends AstNode {
         console.log("Blog name: " + this.blogName);
 
         if (this.tokenizer.checkToken("Format")) {
-            var blogFormat = new Format();
+            var blogFormat = new Format(Math.random().toString());
             blogFormat.parse();
         } else {
             console.log("Blog Format not found");
@@ -77,10 +77,9 @@ export default class Program extends AstNode {
                             </html>`;
         this.fs.appendFileSync("output.html", htmlBeginning);
 
-        this.fs.appendFile("output.css", "", function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+        //creating a css file for format if not existing already
+        this.fs.appendFileSync("output.css", "");
+
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();

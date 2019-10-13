@@ -10,61 +10,21 @@ export default class Format extends astNode{
     // appent css elemnt to output.css file
 
 
-    constructor(background, font, size, alignment){
-        this.background = background;
-        this.font = font;
-        this.size = size;
-        this.alignment = alignment;
-
-
+    constructor(cssClass){
+        this.cssClass = cssClass;
+        this.background = "";
+        this.font = "";
+        this.size = "";
+        this.alignment = "";
     }
 
-    get background(){
-        return this._background;
-    }
-
-    set background(value){
-        // check type and error handling
-
-        this._background = value;
-    }
-
-    get font(){
-        return this._font;
-    }
-
-    set font(value){
-        // check type and error handling
-
-        this._font = value;
-    }
-
-    get size(){
-        return this._size;
-    }
-
-    set size(value){
-        // check type and error handling
-
-        this._size = value;
-    }
-
-    get alignment(){
-        return this._alignment;
-    }
-
-    set alignment(value){
-        // check type and error handling
-
-        this._alignment = value;
-    }
 
     //parsing the formatting block into placeholders
     //two types of format blocks: one includes changing global background colour, and one without
-    parse(value){
+    parse(){
         this.tokenizer.getAndCheckNext("Format");
         this.tokenizer.getAndCheckNext("{");
-        if(value == ".globalFormat"){
+        if(this.cssClass == ".globalFormat"){
             //this format includes changing the global background color
             this.tokenizer.getAndCheckNext("blog-background");
             this.background = this.tokenizer.getNext();
@@ -77,21 +37,55 @@ export default class Format extends astNode{
 
         }else{
             // this format is only for changing the post or about me
-            if(this.tokenizer.getNext() == font_lit){
-                this.font = this.tokenizer.getNext();
-            }else if (this.tokenizer.getNext() == font_size_lit){
-                this.size = this.tokenizer.getNext();
-            }else if(this.tokenizer.getNext() == alightment_lit){
-                this.alignment = this.tokenizer.getNext();
+            while(this.tokenizer.getNext() != "}"){
+                if(this.tokenizer.getNext() == font_lit){
+                    this.font = this.tokenizer.getNext();
+                }else if (this.tokenizer.getNext() == font_size_lit){
+                    this.size = this.tokenizer.getNext();
+                }else if(this.tokenizer.getNext() == alightment_lit){
+                    this.alignment = this.tokenizer.getNext();
+                }
             }
         }
     }
 
     evaluate(){
-        var cssContent = ''
-        this.fs.appendFile("output.css", "", function (err) {
+        var cssContent;
+        if(this.cssClass == ".globalFormat"){
+            cssContent = '.globalFormat { background-color: ' + this.background + ';'
+                + 'font-family: ' + this.font + ';'
+                + 'font-size: ' + this.size + ';'
+                + 'text-align' + this.alignment + '; }';
+        }else{
+
+            //getting default values from css file if user input is missing
+            function readData(err, data) {
+                var globalFormat,
+                    style;
+                globalFormat = data.querySelector('.globalFormat');
+                style = getComputedStyle(globalFormat);
+                if(this.font == ""){
+                    this.font = style.font-family;
+                }
+                if(this.size == ""){
+                    this.size = style.font-size;
+                }
+                if(this.alignment == ""){
+                    this.alignment = style.text-align;
+                }
+            }
+
+            fs.readFile('output.css', 'utf8', readData);
+
+            cssContent = '.' + this.cssClass + ' {'
+                + 'font-family: ' + this.font + ';'
+                + 'font-size: ' + this.size + ';'
+                + 'text-align' + this.alignment + '; }';
+        }
+
+        this.fs.appendFile("output.css", cssContent, function (err) {
             if (err) throw err;
-            console.log("something fucked up in the format evaluation process");
+            console.log("something went wrong in adding format to css file");
         });
     }
 
