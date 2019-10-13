@@ -25,7 +25,7 @@ export default class Program extends AstNode {
             s = new Post();
         }
         s.mockParse();
-        this.blogItems.push(s);;
+        this.blogItems.push(s);
         console.log(this.blogItems.length);
     }
 
@@ -39,8 +39,7 @@ export default class Program extends AstNode {
         console.log("Blog name: " + this.blogName);
 
         if (this.tokenizer.checkToken("Format")) {
-            //this.tokenizer.getAndCheckNext("Format");
-            var blogFormat = new Formatting();
+            var blogFormat = new Format(Math.random().toString());
             blogFormat.parse();
         } else {
             console.log("Blog Format not found");
@@ -57,13 +56,13 @@ export default class Program extends AstNode {
         }
 
         while(!this.tokenizer.checkToken("Donefornow")) {
-                var post = null;
-                
-                if (this.tokenizer.CheckToken("Post")) {
-                    post = new Post();
-                    post.parse(this.blogType);
-                    this.blogItems.push(post);
-                }
+            var post = null;
+
+            if (this.tokenizer.CheckToken("Post")) {
+                post = new Post();
+                post.parse(this.blogType);
+                this.blogItems.push(post);
+            }
         }
     }
 
@@ -81,6 +80,9 @@ export default class Program extends AstNode {
 
         this.fs.appendFileSync("output.html", htmlBeginning);
 
+        //creating a css file for format if not existing already
+        this.fs.appendFileSync("output.css", "");
+
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
@@ -89,4 +91,3 @@ export default class Program extends AstNode {
         this.fs.appendFileSync("output.html", htmlEnding);
     }
 }
-
