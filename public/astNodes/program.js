@@ -2,6 +2,7 @@
 import AstNode from "../libs/astNode.js";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
+import Formatting from "./format.js";
 import { format } from "util";
 export default class Program extends AstNode {
 
@@ -38,25 +39,27 @@ export default class Program extends AstNode {
         console.log("Blog name: " + this.blogName);
 
         if (this.tokenizer.checkToken("Format")) {
-            var blogFormat = new Format();
+            //this.tokenizer.getAndCheckNext("Format");
+            var blogFormat = new Formatting();
             blogFormat.parse();
         } else {
             console.log("Blog Format not found");
             process.exit(0);
         }
 
-        if (tokenizer.CheckToken("Aboutme")) {
+        if (this.tokenizer.checkToken("Aboutme")) {
             var meBlock = new MeBlock();
             meBlock.parse();
+            this.blogItems.push(meBlock);
         } else {
             console.log("MeBlock (About me) not found");
             process.exit(0);
         }
 
-        while(!tokenizer.checkToken("Donefornow")) {
+        while(!this.tokenizer.checkToken("Donefornow")) {
                 var post = null;
                 
-                if (tokenizer.CheckToken("Post")) {
+                if (this.tokenizer.CheckToken("Post")) {
                     post = new Post();
                     post.parse(this.blogType);
                     this.blogItems.push(post);
@@ -75,12 +78,15 @@ export default class Program extends AstNode {
                             </div>`;
         var htmlEnding = `</body>
                             </html>`;
+
         this.fs.appendFileSync("output.html", htmlBeginning);
+
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
         }
-        this.fs.appendFileSync("output.html", htmlEnd);
+
+        this.fs.appendFileSync("output.html", htmlEnding);
     }
 }
 
