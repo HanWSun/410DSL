@@ -2,7 +2,7 @@
 import AstNode from "../libs/astNode.js";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
-import Formatting from "./format.js";
+import Format from "./format.js";
 import { format } from "util";
 export default class Program extends AstNode {
 
