@@ -49,12 +49,4 @@ export default class AstNode {
     evaluate() {
         throw new Error("Method evaluate in abstract class not implemented!");
     }
-
-    nameCheck() {
-        throw new Error("Method nameCheck in abstract class not implemented!");
-    }
-
-    typeCheck() {
-        throw new Error("Method typeCheck in abstract class not implemented!");
-    }
 }
