@@ -28,29 +28,34 @@ export default class Format extends astNode {
         this.tokenizer.getAndCheckNext("{");
         if (this.cssClass == ".globalFormat") {
             //this format includes changing the global background color
-            while (this.tokenizer.getNext() != "}") {
-                if(this.tokenizer.getNext() == blog_background){
+            while (this.tokenizer.checkNext() != "}") {
+                var nextElem = this.tokenizer.getNext();
+                if(nextElem == blog_background){
                     this.background = this.tokenizer.getNext();
-                } else if (this.tokenizer.getNext() == font_lit) {
+                } else if (nextElem == font_lit) {
                     this.font = this.tokenizer.getNext();
-                } else if (this.tokenizer.getNext() == font_size_lit) {
+                } else if (nextElem == font_size_lit) {
                     this.size = this.tokenizer.getNext();
-                } else if (this.tokenizer.getNext() == alightment_lit) {
+                } else if (nextElem == alightment_lit) {
                     this.alignment = this.tokenizer.getNext();
                 }
             }
-
+            //advancing to the "}"
+            this.tokenizer.getNext();
         } else {
             // this format is only for changing the post or about me
-            while (this.tokenizer.getNext() != "}") {
-                if (this.tokenizer.getNext() == font_lit) {
+            while (this.tokenizer.checkNext() != "}") {
+                var nextElem = this.tokenizer.getNext();
+                if (nextElem == font_lit) {
                     this.font = this.tokenizer.getNext();
-                } else if (this.tokenizer.getNext() == font_size_lit) {
+                } else if (nextElem == font_size_lit) {
                     this.size = this.tokenizer.getNext();
-                } else if (this.tokenizer.getNext() == alightment_lit) {
+                } else if (nextElem == alightment_lit) {
                     this.alignment = this.tokenizer.getNext();
                 }
             }
+            //advancing to the "}"
+            this.tokenizer.getNext();
         }
     }
 
