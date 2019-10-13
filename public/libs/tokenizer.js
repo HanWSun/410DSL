@@ -70,7 +70,7 @@ export default class Tokenizer {
       if (this.currentToken<this.tokens.length){
         token = this.tokens[this.currentToken];
         this.currentToken++;
-        console.log("the next token gotten is: " + token);
+        //console.log("the next token gotten is: " + token);
       }
       else{
         token="NULLTOKEN";

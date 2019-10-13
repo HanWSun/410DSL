@@ -10,6 +10,7 @@ export default class Format extends astNode {
 
 
     constructor(cssClass) {
+        console.log("cssclass: " + cssClass);
         super();
         this.cssClass = cssClass;
         this.background = "";
@@ -23,9 +24,11 @@ export default class Format extends astNode {
     //parsing the formatting block into placeholders
     //two types of format blocks: one includes changing global background colour, and one without
     parse() {
+        console.log("format.js parsing format");
         this.tokenizer.getAndCheckNext("Format");
         this.tokenizer.getAndCheckNext("{");
         if (this.cssClass == ".globalFormat") {
+            console.log("parsing global format");
             //this format includes changing the global background color
             this.tokenizer.getAndCheckNext("blog-background");
             this.background = this.tokenizer.getNext();
@@ -38,6 +41,7 @@ export default class Format extends astNode {
 
         } else {
             // this format is only for changing the post or about me
+            console.log("parsing post/aboutme format");
             while (this.tokenizer.getNext() != "}") {
                 if (this.tokenizer.getNext() == font_lit) {
                     this.font = this.tokenizer.getNext();

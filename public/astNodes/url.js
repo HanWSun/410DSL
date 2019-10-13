@@ -8,9 +8,11 @@ export default class Url extends astNode {
     constructor() {
         super();
         this.url = "";
+        this.tokenizer = astNode.nodeTokenizer();
     }
 
     parse(){
+        console.log("url.js parsing");
         this.tokenizer.getAndCheckNext("url");
         this.url = this.tokenizer.getNext();
     }
