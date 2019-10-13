@@ -3,6 +3,7 @@ import astNode from "../libs/astNode.js";
 const font_lit = "font";
 const font_size_lit = "font-size";
 const alightment_lit = "alignment";
+const blog_background = "blog-background";
 
 export default class Format extends astNode {
     // TODO: getting the user input for background, font, size, alignment
@@ -27,14 +28,17 @@ export default class Format extends astNode {
         this.tokenizer.getAndCheckNext("{");
         if (this.cssClass == ".globalFormat") {
             //this format includes changing the global background color
-            this.tokenizer.getAndCheckNext("blog-background");
-            this.background = this.tokenizer.getNext();
-            this.tokenizer.getAndCheckNext("font");
-            this.font = this.tokenizer.getNext();
-            this.tokenizer.getAndCheckNext("font-size");
-            this.size = this.tokenizer.getNext();
-            this.tokenizer.getAndCheckNext("alignment");
-            this.alignment = this.tokenizer.getNext();
+            while (this.tokenizer.getNext() != "}") {
+                if(this.tokenizer.getNext() == blog_background){
+                    this.background = this.tokenizer.getNext();
+                } else if (this.tokenizer.getNext() == font_lit) {
+                    this.font = this.tokenizer.getNext();
+                } else if (this.tokenizer.getNext() == font_size_lit) {
+                    this.size = this.tokenizer.getNext();
+                } else if (this.tokenizer.getNext() == alightment_lit) {
+                    this.alignment = this.tokenizer.getNext();
+                }
+            }
 
         } else {
             // this format is only for changing the post or about me
