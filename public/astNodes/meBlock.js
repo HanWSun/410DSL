@@ -1,13 +1,24 @@
-import Formatting from "./format";
+import Format from "./format";
+import AstNode from "../libs/astNode";
 
-export default class MeBlock {
+export default class MeBlock extends AstNode{
+
+    constructor() {
+        super();
+        this.tokenizer = AstNode.nodeTokenizer();
+        this.text = "";
+        this.fs = require("fs");
+    }
+
     parse() {
-        tokenizer.getAndCheckNext("About me");
-        text = tokenizer.getNext();
-        if (tokenizer.checkToken("Format")) {
-            format = new Formatting();
+        this.tokenizer.getAndCheckNext("Aboutme");
+        this.tokenizer.getAndCheckNext("{");
+        this.text = this.tokenizer.getNext();
+        console.log("meBlock.js text is: " + this.text);
+        if (this.tokenizer.checkNext("Format")) {
+            this.format = new Format();
         }
-        format.parse();
+        this.format.parse();
     }
 
     evaluate() {

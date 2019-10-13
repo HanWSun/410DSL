@@ -1,7 +1,7 @@
 import astNode from "../libs/astNode.js";
 
 const font_lit = "font";
-const font_size_lit = "font-size";
+const font_size_lit = "fsize";
 const alightment_lit = "alignment";
 const blog_background = "blog-background";
 

@@ -20,14 +20,13 @@ function initializeApp() {
                     , "center", "left", "right", "justify", "alignment"
                     , ":", ";", "{", "}"];
 
-    var input = "sampleInput";
     console.log("index.js, making tokenizer");
     Tokenizer.makeTokenizer(literals, "input.txt");
     console.log("index.js, creating program");
     var program = new Program();
     console.log("index.js, parsing program");
     program.parse();
-    program.evaluate();
+    //program.evaluate();
 }
 
 function mock() {
