@@ -19,6 +19,7 @@ export default class Format extends astNode {
         this.size = "";
         this.alignment = "";
         this.tokenizer = astNode.nodeTokenizer();
+        this.fs = astNode.nodeFs();
     }
 
 
@@ -89,7 +90,7 @@ export default class Format extends astNode {
                 }
             }
 
-            fs.readFile('output.css', 'utf8', readData);
+            this.fs.readFile('output.css', 'utf8', readData);
 
             cssContent = '.' + this.cssClass + ' {'
                 + 'font-family: ' + this.font + ';'

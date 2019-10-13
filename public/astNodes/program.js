@@ -13,7 +13,7 @@ export default class Program extends AstNode {
         this.blogType = "";
         this.blogName = "";
         this.tokenizer = AstNode.nodeTokenizer();
-        this.fs = require("fs")
+        this.fs = AstNode.nodeFs();
         console.log(AstNode.nodeTokenizer());
     }
 
@@ -27,8 +27,8 @@ export default class Program extends AstNode {
         console.log("Blog name: " + this.blogName);
 
         if (this.tokenizer.checkToken("Format")) {
-            var blogFormat = new Format(".globalFormat");
-            blogFormat.parse();
+            this.blogFormat = new Format(".globalFormat");
+            this.blogFormat.parse();
         } else {
             console.log("Blog Format not found");
             process.exit(0);
@@ -70,6 +70,7 @@ export default class Program extends AstNode {
 
         //creating a css file for format if not existing already
         this.fs.appendFileSync("output.css", "");
+        this.blogFormat.evaluate();
 
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {

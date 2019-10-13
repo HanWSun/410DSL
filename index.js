@@ -26,7 +26,7 @@ function initializeApp() {
     var program = new Program();
     console.log("index.js, parsing program");
     program.parse();
-    //program.evaluate();
+    program.evaluate();
 }
 
 function mock() {
