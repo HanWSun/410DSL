@@ -1,18 +1,18 @@
-import Tokenizer from "../libs/tokenizer";
-import AstNode from "../libs/tokenizer";
+
+import AstNode from "../libs/astNode.js";
 import Post from "./post";
 import MeBlock from "./meBlock.js";
 import { format } from "util";
-
-export default class Program { // extends AstNode {
+export default class Program extends AstNode {
 
     constructor() {
-        // console.log("calling super");
-        // super();
+        console.log("calling super");
+        super();
         this.blogItems = [];
         this.blogType = "";
         this.blogName = "";
-        this.tokenizer = Tokenizer.getTokenizer();
+        this.tokenizer = AstNode.nodeTokenizer();
+        console.log(AstNode.nodeTokenizer());
     }
 
     mockParse(val) {
@@ -58,13 +58,14 @@ export default class Program { // extends AstNode {
                 
                 if (tokenizer.CheckToken("Post")) {
                     post = new Post();
-                    post.parse();
+                    post.parse(this.blogType);
                     this.blogItems.push(post);
                 }
         }
     }
 
     evaluate() {
+        AstNode.addToNames(this.blogName);
         var htmlBeginning = `<!DOCTYPE html>
                             <html>
                             <meta name="viewport" content = "width=device-width, initial-scale=1">
@@ -74,10 +75,8 @@ export default class Program { // extends AstNode {
                             </div>`;
         var htmlEnding = `</body>
                             </html>`;
-        this.fs.appendFile("output.html", htmlBeginning, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+        this.fs.appendFileSync("output.html", htmlBeginning);
+
         this.fs.appendFile("output.css", "", function (err) {
             if (err) throw err;
             console.log("something fucked up in the program evaluation process");
@@ -86,9 +85,7 @@ export default class Program { // extends AstNode {
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
         }
-        this.fs.appendFile("output.html", htmlEnding, function (err) {
-            if (err) throw err;
-            console.log("something fucked up in the program evaluation process");
-        });
+        this.fs.appendFileSync("output.html", htmlEnd);
     }
 }
+

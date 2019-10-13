@@ -11,21 +11,34 @@ export default class AstNode {
     // static types = {}; 
     // tokenizer = Tokenizer.getTokenizer();
     // fs = require('fs');
+    constructor() {
+        
+    }
 
-    static get names() {
+    static names() {
         return _names;
     }
 
-    static get types() {
+    static addToNames(nm) {
+        _names.push(nm);
+    }
+
+    static types() {
         //console.log(_types);
         return _types;
     }
 
-    static get nodeTokenizer() {
-        return _tokenizer;
+    static addToTypes(tp) {
+        _types.push(tp);
     }
 
-    static get nodeFs() {
+    static nodeTokenizer() {
+        //console.log("astnode.js nodeTokenizer: " + _tokenizer);
+        return Tokenizer.getTokenizer();
+        //return _tokenizer;
+    }
+
+    static nodeFs() {
         return _fs;
     }
 
