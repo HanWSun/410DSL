@@ -24,7 +24,7 @@ export default class Program { // extends AstNode {
             s = new Post();
         }
         s.mockParse();
-        this.blogItems.push(s);;
+        this.blogItems.push(s);
         console.log(this.blogItems.length);
     }
 
@@ -78,11 +78,15 @@ export default class Program { // extends AstNode {
             if (err) throw err;
             console.log("something fucked up in the program evaluation process");
         });
+        this.fs.appendFile("output.css", "", function (err) {
+            if (err) throw err;
+            console.log("something fucked up in the program evaluation process");
+        });
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
             blogItems[i].evaluate();
         }
-        this.fs.appendFile("output.html", htmlEnd, function (err) {
+        this.fs.appendFile("output.html", htmlEnding, function (err) {
             if (err) throw err;
             console.log("something fucked up in the program evaluation process");
         });
