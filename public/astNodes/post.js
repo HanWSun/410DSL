@@ -1,11 +1,11 @@
 import AstNode from "../libs/astNode";
 import { format } from "util";
 
+const photo = "imge";
+const audio = "msic";
+const video = "mvie";
 
 export default class Post extends AstNode{
-    photo = "imge";
-    audio = "msic";
-    video = "mvie";
 
     mockParse() {
         console.log("mock parse for post");
