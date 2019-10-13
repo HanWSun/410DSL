@@ -1,4 +1,4 @@
-import astNode from "./libs/astNode.js";
+import astNode from "../libs/astNode.js";
 
 const font_lit = "font";
 const font_size_lit = "font-size";

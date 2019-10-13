@@ -7,11 +7,6 @@ const video = "mvie";
 
 export default class Post extends AstNode{
 
-    photo = "imge";
-    audio = "msic";
-    video = "mvie";
-
-
     mockParse() {
         console.log("mock parse for post");
     }
