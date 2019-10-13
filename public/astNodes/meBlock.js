@@ -7,7 +7,7 @@ export default class MeBlock extends AstNode{
         super();
         this.tokenizer = AstNode.nodeTokenizer();
         this.text = "";
-        this.fs = require("fs");
+        this.fs = AstNode.nodeFs();
     }
 
     parse() {
@@ -22,10 +22,10 @@ export default class MeBlock extends AstNode{
     }
 
     evaluate() {
-        this.fs.appendFileSync("../output.html", '<div class="aboutme">\n');
-        this.fs.appendFileSync("../output.html", "<h2>About Me</h2>\n");
-        this.fs.appendFileSync("../output.html", "<p>" + text + "</p>\n");
-        this.fs.appendFileSync("../output.html", "</div>\n");
-        format.evaluate();
+        this.fs.appendFileSync("output.html", '<div class="aboutme">\n');
+        this.fs.appendFileSync("output.html", "<h2>About Me</h2>\n");
+        this.fs.appendFileSync("output.html", "<p>" + this.text + "</p>\n");
+        this.fs.appendFileSync("output.html", "</div>\n");
+        this.format.evaluate();
     }
 }
