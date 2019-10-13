@@ -1,7 +1,6 @@
 import Formatting from "./format";
 
 export default class MeBlock {
-    
     parse() {
         tokenizer.getAndCheckNext("About me");
         text = tokenizer.getNext();

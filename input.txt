@@ -1,0 +1,26 @@
+Create photoblog MyBlog:
+
+Format { 
+    blog-background “red”;
+    font “Comic Sans”;
+    fsize “13px”;
+    alignment center;
+}
+
+About me { 
+    “Hello, welcome to my photo blog”
+    Format { 
+        font “timesnewroman”;
+        fsize 16 px;
+        alignment center;
+    }
+}
+
+Post { imge for MyBlog: Caption “MyPhotoTitle”; URL “www.sourceURL.com”;
+    Format { 
+        font “Comic Sans”;
+        fsize 12 px;
+        alignment left;
+    }
+}
+Done for now
