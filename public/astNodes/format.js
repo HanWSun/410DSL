@@ -10,11 +10,13 @@ export default class Format extends astNode {
 
 
     constructor(cssClass) {
+        super();
         this.cssClass = cssClass;
         this.background = "";
         this.font = "";
         this.size = "";
         this.alignment = "";
+        this.tokenizer = astNode.nodeTokenizer();
     }
 
 

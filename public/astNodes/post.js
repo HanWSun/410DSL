@@ -18,6 +18,7 @@ export default class Post extends AstNode{
         this.caption = "";
         this.url = new URL();
         this.postClass = Math.random().toString();
+        this.tokenizer = AstNode.nodeTokenizer();
     }
 
     // POST  ::= “Post {” MEDIA “for” TITLE “Caption” TEXT URL     #* + FORMATTING* “}”
