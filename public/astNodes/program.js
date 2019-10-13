@@ -13,6 +13,7 @@ export default class Program extends AstNode {
         this.blogType = "";
         this.blogName = "";
         this.tokenizer = AstNode.nodeTokenizer();
+        this.fs = require("fs")
         console.log(AstNode.nodeTokenizer());
     }
 
@@ -42,10 +43,10 @@ export default class Program extends AstNode {
             process.exit(0);
         }
 
-        while(!this.tokenizer.checkToken("Donefornow")) {
+        while(!this.tokenizer.checkNext("Donefornow")) {
             var post = null;
 
-            if (this.tokenizer.CheckToken("Post")) {
+            if (this.tokenizer.checkNext("Post")) {
                 post = new Post();
                 post.parse(this.blogType);
                 this.blogItems.push(post);
@@ -72,7 +73,7 @@ export default class Program extends AstNode {
 
         var itemLength = this.blogItems.length;
         for (var i = 0; i < itemLength; i++) {
-            blogItems[i].evaluate();
+            this.blogItems[i].evaluate();
         }
 
         this.fs.appendFileSync("output.html", htmlEnding);
