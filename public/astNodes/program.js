@@ -26,6 +26,8 @@ export default class Program extends AstNode {
         console.log("Blog type: " + this.blogType);
         console.log("Blog name: " + this.blogName);
 
+        this.tokenizer.getAndCheckNext(":");
+
         if (this.tokenizer.checkToken("Format")) {
             this.blogFormat = new Format(".globalFormat");
             this.blogFormat.parse();

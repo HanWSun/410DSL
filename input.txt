@@ -8,7 +8,7 @@ Format {
 }
 
 About me { 
-    “Hello, welcome to my photo blog”
+    “Hello, welcome to my blog”
     Format { 
         font timesnewroman
         fsize 16
