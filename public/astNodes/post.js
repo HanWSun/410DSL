@@ -1,9 +1,11 @@
 import AstNode from "../libs/astNode";
-import { format } from "util";
 
 const photo = "imge";
 const audio = "msic";
 const video = "mvie";
+const photoblog = "photoblog";
+const audioblog = "audioblog";
+const videoblog = "videoblog";
 
 export default class Post extends AstNode{
 
@@ -25,15 +27,19 @@ export default class Post extends AstNode{
 
     // POST  ::= “Post {” MEDIA “for” TITLE “Caption” TEXT URL     #* + FORMATTING* “}”
 
-    parse(){
+    parse(blogType){
         console.log("post.js parsing post");
         this.tokenizer.getAndCheckNext("Post");
         this.tokenizer.getAndCheckNext("{");
-        if(this.tokenizer.checkNext() === this.photo || this.tokenizer.checkNext() === this.audio || this.tokenizer.checkNext() === this.video){
-            this.media = this.tokenizer.getNext();
-        } else {
-            this.tokenizer.getAndCheckNext(this.photo);
+
+        if(blogType === photoblog){
+            this.media = this.tokenizer.getAndCheckNext(photo);
+        } else if (blogType === audioblog){
+            this.media = this.tokenizer.getAndCheckNext(audio);
+        } else if (blogType === videoblog){
+            this.media = this.tokenizer.getAndCheckNext(video);
         }
+
         this.tokenizer.getAndCheckNext("for");
         this.postTitle = this.tokenizer.getNext();
         this.tokenizer.getAndCheckNext("Caption");
