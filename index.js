@@ -18,7 +18,7 @@ function initializeApp() {
                     , "Format", "Caption", "URL", "imge", "msic", "mvie"
                     , "blog-background", "font", "fsize", "cm", "px"
                     , "center", "left", "right", "justify", "alignment"
-                    , ":", ";", "{", "}"];
+                    , ":", ";", "{", "}", "photoblog", "audioblog", "videoblog"];
 
     console.log("index.js, making tokenizer");
     Tokenizer.makeTokenizer(literals, "input.txt");

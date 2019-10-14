@@ -39,7 +39,7 @@ export default class Tokenizer {
         }
 
       this.tokenizedProgram = this.program;
-      this.tokenizedProgram = this.tokenizedProgram.replace(/\r\n/g,"");
+      this.tokenizedProgram = this.tokenizedProgram.replace(/\n/g,"");
       this.tokenizedProgram = this.tokenizedProgram.replace(/ /g,"");
 
       var RW = "@@" //RESERVEDWORD
